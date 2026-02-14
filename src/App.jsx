@@ -1,8 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import coffeeIMG from './assets/IMG_8216.jpg'
-import firstflight from './assets/firstflight.jpg'
-import diwali from './assets/diwali.jpg'
 import { 
   Heart, 
   ChevronRight, 
@@ -20,10 +17,21 @@ import {
   Music
 } from 'lucide-react';
 
-// Robustly import seaBeach image handling case sensitivity
-const assets = import.meta.glob('./assets/*.{jpg,jpeg,png,JPG,JPEG,PNG}', { eager: true, import: 'default' })
-const seaBeachKey = Object.keys(assets).find(path => path.toLowerCase().includes('seabeach'))
-const seaBeach = seaBeachKey ? assets[seaBeachKey] : null
+// --- ROBUST ASSET LOADING ---
+// 1. Load all images in the assets folder dynamically
+const assets = import.meta.glob('./assets/*.{jpg,jpeg,png,JPG,JPEG,PNG}', { eager: true, import: 'default' });
+
+// 2. Helper to find an image case-insensitively by its partial name
+const getAssetPath = (partialName) => {
+  const key = Object.keys(assets).find(path => path.toLowerCase().includes(partialName.toLowerCase()));
+  return key ? assets[key] : null; // Returns null if not found, preventing build crash
+};
+
+// 3. Retrieve images safely
+const coffeeIMG = getAssetPath('IMG_8216') || getAssetPath('coffee'); 
+const firstflight = getAssetPath('firstflight');
+const diwali = getAssetPath('diwali');
+const seaBeach = getAssetPath('seabeach');
 
 // --- Helper Components ---
 
@@ -59,7 +67,7 @@ Forever Yours,`,
     { 
       text: "Our First Coffee", 
       icon: <Clock size={16}/>, 
-      imageUrl: coffeeIMG,
+      imageUrl: coffeeIMG, // Safely uses the variable from above
       description: "That first sip of coffee where I knew you were the one."
     },
     { 
@@ -81,8 +89,6 @@ Forever Yours,`,
       description: "Celebrating our love amidst the lights and colors of Diwali."
     }
   ],
-  // Add a direct link to an MP3 file here if you have one. 
-  // For now, this is a placeholder or you can use a royalty free link.
   musicUrl: "https://assets.mixkit.co/music/preview/mixkit-love-story-piano-solo-29.mp3" 
 };
 
@@ -168,7 +174,12 @@ const HeroPhoto = ({ src }) => (
       whileHover={{ scale: 1.05 }}
       className="relative w-full h-full rounded-[2rem] overflow-hidden border-4 border-white shadow-xl"
     >
-      <img src={src} alt="Love" className="w-full h-full object-cover" />
+      {/* Fallback image if source is missing */}
+      <img 
+        src={src || "https://placehold.co/400x400/rose/white?text=Our+Love"} 
+        alt="Love" 
+        className="w-full h-full object-cover" 
+      />
       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
     </motion.div>
     <motion.div
@@ -331,8 +342,9 @@ export default function App() {
               </button>
               
               <div className="aspect-square w-full relative bg-gray-100 mb-4 overflow-hidden border border-gray-100">
+                {/* Fallback for memory images */}
                 <img 
-                  src={selectedMemory.imageUrl} 
+                  src={selectedMemory.imageUrl || "https://placehold.co/400x400/rose/white?text=Memory"} 
                   alt={selectedMemory.text} 
                   className="w-full h-full object-cover transition-transform duration-1000 hover:scale-110"
                 />
