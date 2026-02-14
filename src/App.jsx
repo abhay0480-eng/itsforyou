@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import coffeeIMG from './assets/IMG_8216.jpg'
-import seaBeach from './assets/seabeach.jpg'
 import firstflight from './assets/firstflight.jpg'
 import diwali from './assets/diwali.jpg'
 import { 
@@ -20,6 +19,11 @@ import {
   X,
   Music
 } from 'lucide-react';
+
+// Robustly import seaBeach image handling case sensitivity
+const assets = import.meta.glob('./assets/*.{jpg,jpeg,png,JPG,JPEG,PNG}', { eager: true, import: 'default' })
+const seaBeachKey = Object.keys(assets).find(path => path.toLowerCase().includes('seabeach'))
+const seaBeach = seaBeachKey ? assets[seaBeachKey] : null
 
 // --- Helper Components ---
 
