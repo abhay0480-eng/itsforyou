@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import coffeeIMG from './assets/IMG_8216.jpg'
+import seaBeach from './assets/seaBeach.jpg'
+import firstflight from './assets/firstflight.jpg'
+import diwali from './assets/diwali.jpg'
 import { 
   Heart, 
   ChevronRight, 
@@ -28,7 +31,7 @@ const CloudRain = ({ size }) => <span style={{fontSize: size}}>🌧️</span>;
 const APP_CONFIG = {
   wifeName: "Minakshi",
   startDate: "2020-05-20", 
-  anniversaryDate: "Feb 14, 2026",
+  anniversaryDate: "May 07, 2023",
   introMessage: "Every day with you feels like a dream, but today is extra special.",
   reasons: [
     "Your beautiful smile",
@@ -37,13 +40,17 @@ const APP_CONFIG = {
     "How you support me",
     "Everything about you"
   ],
-  finalLetter: `To my dearest Minakshi,
+  finalLetter: `My Dearest Minakshi, 🌹
 
-Words can't describe how much you mean to me. You are my best friend, my soulmate, and my greatest adventure. Thank you for being you and for filling my life with so much color.
+From the moment our paths crossed, my life changed in the most beautiful way. You are not just my wife; you are my best friend, my confidante, and my greatest adventure. 🌍✨
 
-I love you more than all the stars in the sky.
+Every laugh we share is a melody, and every moment with you is a treasure I hold close to my heart. Thank you for being the sunshine on my cloudy days and the calm in my storms. ☀️🌧️
 
-Forever Yours.`,
+I promise to love you, cherish you, and stand by your side through all of life's seasons. Here’s to us, to our love, and to a lifetime of making memories together. 🥂💑
+
+I love you more than words can say. ❤️
+
+Forever Yours,`,
   memories: [
     { 
       text: "Our First Coffee", 
@@ -52,22 +59,22 @@ Forever Yours.`,
       description: "That first sip of coffee where I knew you were the one."
     },
     { 
-      text: "That Rainy Walk", 
+      text: "That first flight together", 
       icon: <CloudRain size={16}/>, 
-      imageUrl: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?q=80&w=800", 
-      description: "Sharing an umbrella and laughing under the clouds."
+      imageUrl: firstflight, 
+      description: "Soaring through the skies with you felt like flying on clouds of love."
     },
     { 
-      text: "Summer 2023", 
+      text: "Winter 2024 Kerela Trip", 
       icon: <Camera size={16}/>, 
-      imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800", 
-      description: "The golden sun and your even brighter smile."
+      imageUrl: seaBeach,
+      description: "Building sandcastles and memories together."
     },
     { 
-      text: "Forever to Go", 
-      icon: <Heart size={16}/>, 
-      imageUrl: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=800", 
-      description: "Just the beginning of our beautiful forever."
+      text: "Diwali 2024", 
+      icon: <Star size={16}/>, 
+      imageUrl: diwali, 
+      description: "Celebrating our love amidst the lights and colors of Diwali."
     }
   ],
   // Add a direct link to an MP3 file here if you have one. 
@@ -148,6 +155,27 @@ const RotatingReasons = ({ reasons }) => {
     </div>
   );
 };
+
+const HeroPhoto = ({ src }) => (
+  <div className="relative w-48 h-48 sm:w-64 sm:h-64 mx-auto my-6 sm:my-8 group">
+    <div className="absolute inset-0 bg-gradient-to-tr from-rose-300 to-pink-300 rounded-[2rem] rotate-6 opacity-60 group-hover:rotate-12 transition-transform duration-700" />
+    <div className="absolute inset-0 bg-gradient-to-bl from-rose-200 to-orange-100 rounded-[2rem] -rotate-3 opacity-60 group-hover:-rotate-6 transition-transform duration-700" />
+    <motion.div 
+      whileHover={{ scale: 1.05 }}
+      className="relative w-full h-full rounded-[2rem] overflow-hidden border-4 border-white shadow-xl"
+    >
+      <img src={src} alt="Love" className="w-full h-full object-cover" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+    </motion.div>
+    <motion.div
+      animate={{ scale: [1, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity }}
+      className="absolute -bottom-4 -right-4 bg-white p-2 rounded-full shadow-lg text-rose-500"
+    >
+      <Heart size={20} fill="currentColor" />
+    </motion.div>
+  </div>
+);
 
 // --- Existing Components Refined ---
 
@@ -355,6 +383,8 @@ export default function App() {
                     <Sparkles size={32} />
                   </motion.div>
                 </div>
+
+                <HeroPhoto src={seaBeach} />
 
                 <RotatingReasons reasons={APP_CONFIG.reasons} />
 
